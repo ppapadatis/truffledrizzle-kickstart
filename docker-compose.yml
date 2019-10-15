@@ -1,0 +1,33 @@
+version: '3.1'
+services:
+  ganache-cli:
+    container_name: ganache-cli
+    build:
+      context: ./ganache
+    ports:
+      - '8545:8545'
+  truffle-drizzle:
+    container_name: truffle-drizzle
+    build:
+      context: ./truffledrizzle
+    volumes:
+      - './truffledrizzle:/var/www/html'
+      - './truffledrizzle/src:/var/www/html.src'
+      - /var/www/html/node_modules
+    healthcheck:
+      test: 'curl -sf -X POST --data ''{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'' localhost:8545'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: |
+      sh -c "rimraf output &&
+          rimraf src/contracts &&
+          truffle compile --all &&
+          cp -R output/contracts src/contracts &&
+          truffle migrate --reset &&
+          rimraf src/contracts &&
+          cp -R output/contracts src/contracts &&
+          npm start"
+    ports:
+      - '3000:3000'
+    tty: true
