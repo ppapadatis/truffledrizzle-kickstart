@@ -12,7 +12,7 @@ services:
       context: ./truffledrizzle
     volumes:
       - './truffledrizzle:/var/www/html'
-      - './truffledrizzle/src:/var/www/html.src'
+      - './truffledrizzle/src:/var/www/html/src'
       - /var/www/html/node_modules
     healthcheck:
       test: 'curl -sf -X POST --data ''{"jsonrpc":"2.0","method":"eth_blockNumber","params":[],"id":1}'' localhost:8545'
