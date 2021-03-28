@@ -1,8 +1,5 @@
-import { drizzle, store } from './store';
-import config from './config';
+import { drizzle } from './store';
 
 export {
   drizzle,
-  store,
-  config,
 };

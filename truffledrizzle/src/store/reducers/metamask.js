@@ -1,5 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateState } from './index';
+import { updateState } from './helpers';
 
 const initialState = {
   checkMetaMask: false,
@@ -11,16 +11,16 @@ const initialState = {
   storedValue: {},
 };
 
-const checkMetamask = (state, action) => updateState(state, { checkMetaMask: true });
-const checkMetamaskDone = (state, action) => updateState(state, { checkMetaMask: false });
-const txErrorMetamask = (state, action) => updateState(state, { checkMetaMask: false, metaMaskReject: true });
-const txErrorMetamaskDone = (state, action) => updateState(state, { metaMaskReject: false });
-const checkingTxUI = (state, action) => updateState(state, { checkMetaMask: false, checkingTx: true });
-const checkingTxUIDone = (state, action) => updateState(state, { checkMetaMask: false, checkingTx: false });
-const txSuccessfulUpdateUI = (state, action) => updateState(state, { checkingTx: false, txSuccessful: true });
+const checkMetamask = state => updateState(state, { checkMetaMask: true });
+const checkMetamaskDone = state => updateState(state, { checkMetaMask: false });
+const txErrorMetamask = state => updateState(state, { checkMetaMask: false, metaMaskReject: true });
+const txErrorMetamaskDone = state => updateState(state, { metaMaskReject: false });
+const checkingTxUI = state => updateState(state, { checkMetaMask: false, checkingTx: true });
+const checkingTxUIDone = state => updateState(state, { checkMetaMask: false, checkingTx: false });
+const txSuccessfulUpdateUI = state => updateState(state, { checkingTx: false, txSuccessful: true });
 const setDrizzleState = (state, action) => updateState(state, { drizzle: action.drizzle });
-const gettingStoredValue = (state, action) => updateState(state, { gotStoredValue: false });
-const gotStoredValue = (state, action) => updateState(state, { gotStoredValue: true, storedValue: {} });
+const gettingStoredValue = state => updateState(state, { gotStoredValue: false });
+const gotStoredValue = state => updateState(state, { gotStoredValue: true, storedValue: {} });
 
 const metamaskReducer = (state = initialState, action) => {
   const { type } = action;

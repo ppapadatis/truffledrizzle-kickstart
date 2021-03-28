@@ -2,7 +2,7 @@ const config = {
   web3: {
     fallback: {
       type: 'ws',
-      url: 'ws://0.0.0.0:8545',
+      url: 'ws://localhost:8545',
     },
   },
   contracts: [],

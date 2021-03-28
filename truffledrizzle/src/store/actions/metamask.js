@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import { action } from './index';
+import { action } from './helpers';
 
 export const checkMetamask = () => action(actionTypes.CHECK_METAMASK);
 export const checkMetamaskDone = () => action(actionTypes.CHECK_METAMASK_DONE);

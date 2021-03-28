@@ -1,13 +1,15 @@
 import React from 'react';
-import { DrizzleProvider } from 'drizzle-react';
+import { DrizzleContext } from '@drizzle/react-plugin';
 
-import { store, config } from './store';
+import { drizzle } from './store';
 import { Layout } from './containers';
 
 const App = () => (
-  <DrizzleProvider store={store} options={config}>
-    <Layout />
-  </DrizzleProvider>
+  <DrizzleContext.Provider drizzle={drizzle}>
+    <DrizzleContext.Consumer>
+      { drizzleContext => <Layout drizzleContext={drizzleContext} />}
+    </DrizzleContext.Consumer>
+  </DrizzleContext.Provider>
 );
 
 export default App;

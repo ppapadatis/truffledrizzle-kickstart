@@ -22,9 +22,10 @@ class Footer extends PureComponent {
   }
 
   render() {
+    const { date } = this.state;
     return (
       <footer>
-        {this.state.date.getFullYear()}
+        { date.getFullYear() }
       </footer>
     );
   }

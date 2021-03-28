@@ -1,36 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { drizzleConnect } from 'drizzle-react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import LoadingOverlay from 'react-loading-overlay';
-import * as actions from '../../store/actions';
 import { Home } from '../../routes/index';
 
 import Footer from './Footer';
 import NavBar from './Navigation';
 
+import { asyncComponent } from '../../components';
+
 const asyncNotFound = asyncComponent(() => import('../../routes/notFound'));
 
 class Layout extends Component {
-  constructor(props, context) {
-    super(props);
-    const { onSetDrizzleState } = this.props;
-    onSetDrizzleState(context.drizzle);
-  }
-
   render() {
+    const { drizzleContext: { initialized, drizzle, drizzleState } } = this.props;
     return (
       <BrowserRouter>
-        <LoadingOverlay
-          active={!this.props.initialized}
-          spinner
-          text="Drizzle loading..."
-        >
+        <LoadingOverlay active={!initialized} spinner text="Drizzle loading...">
           <NavBar />
-          <main ref="main">
+          <main>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" render={() => <Home drizzle={drizzle} drizzleState={drizzleState} />} />
               <Route component={asyncNotFound} />
             </Switch>
           </main>
@@ -41,16 +32,12 @@ class Layout extends Component {
   }
 }
 
-Layout.contextTypes = {
-  drizzle: PropTypes.object,
+Layout.propTypes = {
+  drizzleContext: PropTypes.exact({
+    drizzle: PropTypes.objectOf(PropTypes.any),
+    drizzleState: PropTypes.objectOf(PropTypes.any),
+    initialized: PropTypes.bool,
+  }).isRequired,
 };
 
-const mapStateToProps = state => ({
-  initialized: state.drizzleStatus,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSetDrizzleState: (drizzle) => dispatch(actions.setDrizzleState(drizzle)),
-});
-
-export default drizzleConnect(Layout, mapStateToProps, mapDispatchToProps);
+export default Layout;
