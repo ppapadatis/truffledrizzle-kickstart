@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@openzeppelin/contracts": "^2.3.0",
+    "@openzeppelin/contracts": "^4.4.2",
     "classnames": "^2.2.6",
     "connected-react-router": "^5.0.1",
     "drizzle": "^1.2.4",
